@@ -47,11 +47,8 @@ def train_model():
     if not os.path.exists(artifact_location):
         os.makedirs(artifact_location)
     
-    # Log the model with mlflow
-    mlflow.set_artifact_uri(artifact_location)
-
-    # Log the model with signature and input example
-    mlflow.sklearn.log_model(model, "models/model", signature=signature, input_example=input_example)
+    # Log the model with mlflow, specifying the artifact location directly
+    mlflow.sklearn.log_model(model, artifact_path=artifact_location, signature=signature, input_example=input_example)
     
     # Save the model locally for deployment
     save_path = "models/model"
