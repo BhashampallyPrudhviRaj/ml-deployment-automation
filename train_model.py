@@ -40,6 +40,16 @@ def train_model():
     # Infer the model signature based on input data and the trained model
     signature = infer_signature(X_train, model.predict(X_train))
 
+    # Set the artifact location to a valid path
+    artifact_location = "./mlflow_artifacts"
+
+    # Create the directory if it doesn't exist
+    if not os.path.exists(artifact_location):
+        os.makedirs(artifact_location)
+    
+    # Log the model with mlflow
+    mlflow.set_artifact_uri(artifact_location)
+
     # Log the model with signature and input example
     mlflow.sklearn.log_model(model, "models/model", signature=signature, input_example=input_example)
     
